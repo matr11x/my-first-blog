@@ -1,16 +1,16 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+
     {% if user.is_authenticated %}
+        <h1>Posts</h1><br/>
+        <ul>
         {% for post in posts %}
-            <article class="post">
-                <time class="date">
-                    {{ post.published_date }}
-                </time>
-                <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-                <p>{{ post.text|linebreaksbr }}</p>
-            </article>
+            <li><a href="{% url 'post_detail' post.pk %}">
+                {{ post.title }}</a> - <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> - {{ post.author }} - {{ post.published_date }}<br/>
+                {{ post.text|slice:":200" }}</li>
         {% endfor %}
+        </ul>
     {% else %}
         <h1>Login</h1>    
         <br/>

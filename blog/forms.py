@@ -1,13 +1,26 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Category
+
+choices = Category.objects.all().values_list('name', 'name')
+
+choice_list = []
+
+for item in choices:
+    choice_list.append(item)
 
 class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'text',)
+        fields = ('title', 'category','text',)
+
+        widgets = {
+            'title' : forms.TextInput(attrs={'class':'form-control'}),
+            'text' : forms.Textarea(attrs={'class':'form-control'}),
+            'category' : forms.Select(choices = choice_list, attrs = {'class':'form-control'})
+        }
 
 
 class SignUpForm(UserCreationForm):
@@ -36,3 +49,8 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category  # Replace with your actual model
+        fields = ['name']  # Replace 'name' with the actual field name in your model

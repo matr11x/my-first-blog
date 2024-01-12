@@ -1,12 +1,13 @@
 {% extends 'blog/base.html' %}
-{% block title %} New/Edit Post {% endblock %}
-
+{% block title %} Create New Blog Category {% endblock %}
 
 {% block content %}
-    <h2>New/Edit post</h2>
+    <h2>Add Category</h2>
     <form method="POST" class="post-form">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.name }}
+        <br/>
+        <br/>
         <button type="submit" class="save btn btn-secondary">Save</button>
     </form>
 {% endblock %}

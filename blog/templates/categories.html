@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+
+{% if category_posts %}
+    <h1>{{ cats }}</h1><br/>
+
+    <h4>Posts from this category:</h3>
+    <ul>
+    {% for post in category_posts %}
+        <li><a href="{% url 'post_detail' post.pk %}">
+        {{ post.title }}</a> - {{ post.author }} - {{ post.published_date }}<br/>
+        {{ post.text|slice:":200" }}</li>
+
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <h2>Sorry this page does not exist...</h2>
+{% endif %}
+
+{% endblock %}

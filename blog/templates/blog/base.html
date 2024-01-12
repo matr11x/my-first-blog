@@ -2,7 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Django Blog</title>
+    <title>
+        {% block title %} 
+            Django Blog 
+        {% endblock %}
+    </title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -13,7 +18,7 @@
     <!-- Add this style block to adjust navbar size -->
     <style>
         .navbar {
-            padding: 20px; /* Adjust the padding to make the navbar taller */
+            padding: 10px; /* Adjust the padding to make the navbar taller */
         }
 
         .navbar-brand {
@@ -30,9 +35,19 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">LALA Blog</a>
+        <a class="navbar-brand" href="/">Django Blog</a>
 
             <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                </div>
+            </li>    
 
             {% if user.is_authenticated %}
 
@@ -43,6 +58,11 @@
                     <a href="{% url 'post_new' %}" class="nav-link">
                         {% include './icons/file-earmark-plus.svg' %}
                         New Post
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'add_category' %}" class="nav-link">
+                        New Category
                     </a>
                 </li>
                 <li class = 'nav-item'>
