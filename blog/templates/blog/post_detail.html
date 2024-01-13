@@ -20,31 +20,34 @@
             <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %}
     </aside>
-        <h2>{{ post.title }}</h2>
+    <h2>
+        {{ post.title }} - <small><a href="{% url 'category' post.category %}">{{ post.category }}</a></small>
+      </h2>
         <hr>
         <br/>
         <br/>
         <br/>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{ post.text|safe }}</p>
     </article>
 
     <a href="{% url 'post_list' %}" class = "btn btn-secondary">Back</a>
     <hr>
     <form action = "{% url 'like_post' post.pk %}" method = "POST">
         {% csrf_token %}
-        
-            {% if user in post.likes.all %}    
-                <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
-                    {% include './icons/heart-fill.svg' %}
-                </button>
+            {% if post.published_date %}
+                {% if user in post.likes.all %}    
+                    <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
+                        {% include './icons/heart-fill.svg' %}
+                    </button>
+                
+                {% else %}
+                    <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
+                        {% include './icons/heart.svg' %}
+                    </button>
+                {% endif %}
             
-            {% else %}
-                <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
-                    {% include './icons/heart.svg' %}
-                </button>
+                |    &nbsp;&nbsp;&nbsp;{{ total_likes }} Likes <br/>
             {% endif %}
-        
-        |    &nbsp;&nbsp;&nbsp;{{ total_likes }} Likes <br/>
 
     </form>
 
