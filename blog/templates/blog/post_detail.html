@@ -32,9 +32,19 @@
     <hr>
     <form action = "{% url 'like_post' post.pk %}" method = "POST">
         {% csrf_token %}
-        <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
-            {% include './icons/heart.svg' %}
-            </button>-  {{ total_likes }} Likes <br/>
+        
+            {% if user in post.likes.all %}    
+                <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
+                    {% include './icons/heart-fill.svg' %}
+                </button>
+            
+            {% else %}
+                <button type = "submit", name = "post_id", value = "{{ post.id }}", class = "btn">
+                    {% include './icons/heart.svg' %}
+                </button>
+            {% endif %}
+        
+        |    &nbsp;&nbsp;&nbsp;{{ total_likes }} Likes <br/>
 
     </form>
 

@@ -31,6 +31,9 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk = pk)
     total_likes = post.total_likes()
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        liked = True
     return render(request, 'blog/post_detail.html', {'post':post, 'total_likes':total_likes})
 
 def post_new(request):
@@ -118,5 +121,11 @@ def category_views(request, cats):
 
 def LikeView(request, pk):
     post = get_object_or_404(Post, id = request.POST.get('post_id'))
-    post.likes.add(request.user)
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
