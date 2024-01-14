@@ -51,8 +51,6 @@ class CategoryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
-
-        # Retrieve category choices dynamically when the form is instantiated
         choice_list = Category.objects.values_list('name', 'name')
         self.fields['name'].widget.choices = choice_list
 
