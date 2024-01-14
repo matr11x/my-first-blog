@@ -4,8 +4,11 @@ from django.contrib.auth.models import User
 from .models import Post, Category
 
 
+choices = Category.objects.all().values_list('name', 'name')
 choice_list = []
 
+for item in choices:
+    choice_list.append(item)
 
 class PostForm(forms.ModelForm):
 
@@ -48,11 +51,6 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
 class CategoryForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(CategoryForm, self).__init__(*args, **kwargs)
-        choice_list = Category.objects.values_list('name', 'name')
-        self.fields['name'].widget.choices = choice_list
 
     class Meta:
         model = Category  # Replace with your actual model
