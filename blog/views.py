@@ -123,8 +123,8 @@ def AddCategoryView(request):
     return render(request, 'add_category.html', {'form': form})
 
 def category_views(request, cats):
-    category_posts = Post.objects.filter(category=cats.replace('-', ' '))
-    return render(request, 'categories.html', {'cats':cats.title().replace('-', ' '), 'category_posts':category_posts})
+    #category_posts = Post.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categories.html', {})
 
 def LikeView(request, pk):
     post = get_object_or_404(Post, id = request.POST.get('post_id'))
