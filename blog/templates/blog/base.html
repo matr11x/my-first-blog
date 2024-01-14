@@ -54,7 +54,6 @@
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'post_new' %}" class="nav-link">
-                        {% include './icons/file-earmark-plus.svg' %}
                         New Post
                     </a>
                 </li>
@@ -63,11 +62,18 @@
                         New Category
                     </a>
                 </li>
-                <li class = 'nav-item'>
-                    <a href="{% url 'logout' %}" class = 'nav-link'>
-                    Logout
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Profile
                     </a>
-                </li>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{% url 'edit_profile' %}">Settings</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                  </li>
 
             {% else %}
                 <li class = 'nav-item'>
@@ -81,6 +87,7 @@
                     Register
                     </a>
                 </li>
+            
 
             {% endif %}
         </ul>

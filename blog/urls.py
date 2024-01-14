@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-
+from .views import UserEditView, PasswrodsChangeView
+ 
 urlpatterns = [
     path('', views.post_list, name = 'post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
@@ -14,4 +15,7 @@ urlpatterns = [
     path('add_category/', views.AddCategoryView, name = 'add_category'),
     path('category/<str:cats>/', views.category_views, name = 'category'),
     path('like/<int:pk>', views.LikeView, name = 'like_post'),
+    path('edit_profile/', UserEditView.as_view(), name = 'edit_profile'),
+    path('password/', PasswrodsChangeView.as_view(template_name='change-password.html')),
+    path('password_success', views.password_success, name = 'password_success'),
 ]

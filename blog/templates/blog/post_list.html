@@ -1,14 +1,15 @@
 {% extends 'blog/base.html' %}
-
+{% block title %} Posts {% endblock %}
 {% block content %}
 
     {% if user.is_authenticated %}
+
         <h1>Posts</h1><br/>
         <ul>
         {% for post in posts %}
             <li><a href="{% url 'post_detail' post.pk %}">
                 {{ post.title }}</a> - <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> - {{ post.author }} - {{ post.published_date }}<br/>
-                {{ post.text|truncatechars:200 }}</li>
+                {{ post.text|truncatewords:50|safe }}</li>
         {% endfor %}
         </ul>
     {% else %}

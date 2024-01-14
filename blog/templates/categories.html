@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% block title %} {{ cats }} {% endblock %}
 
 
 {% block content %}
@@ -11,7 +12,7 @@
     {% for post in category_posts %}
         <li><a href="{% url 'post_detail' post.pk %}">
         {{ post.title }}</a> - {{ post.author }} - {{ post.published_date }}<br/>
-        {{ post.text|truncatechars:200 }}</li>
+        {{ post.text|truncatewords:200|safe }}</li>
 
     {% endfor %}
     </ul>

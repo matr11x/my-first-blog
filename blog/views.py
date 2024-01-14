@@ -1,3 +1,6 @@
+from typing import Any
+from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from .models import Post, Category
 from django.utils import timezone
@@ -8,8 +11,12 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-# Create your views here.
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+from .forms import EditProfileForm
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 def post_list(request):
     if request.method == 'POST':
@@ -129,3 +136,18 @@ def LikeView(request, pk):
         post.likes.add(request.user)
         liked = True
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
+
+class UserEditView(generic.UpdateView):
+    form_class = EditProfileForm
+    template_name = 'edit_profile.html'
+    success_url = reverse_lazy('post_list')
+
+    def get_object(self):
+        return self.request.user
+    
+class PasswrodsChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('password_success')
+
+def password_success(request):
+    return render(request, 'password_success.html', {})
