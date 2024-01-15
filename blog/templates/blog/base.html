@@ -4,7 +4,7 @@
 <head>
     <title>
         {% block title %} 
-            Django Blog 
+            The Blog
         {% endblock %}
     </title>
 
@@ -18,7 +18,7 @@
     <!-- Add this style block to adjust navbar size -->
     <style>
         .navbar {
-            padding: 10px; /* Adjust the padding to make the navbar taller */
+            padding: 15px; /* Adjust the padding to make the navbar taller */
         }
         .navbar-brand {
             font-size: 24px; /* Adjust the font size of the brand */
@@ -33,11 +33,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Django Blog</a>
+        <a class="navbar-brand" href="/">The Blog</a>
 
             <ul class="navbar-nav ml-auto">
-
-        
 
             {% if user.is_authenticated %}
 

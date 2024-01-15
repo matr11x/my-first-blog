@@ -1,8 +1,10 @@
 {% extends 'blog/base.html' %}
+{% block title %} Your Drafts {% endblock %}
 
 {% block content %}
+    <h1>Your Drafts: </h1><hr>
     {% for post in posts %}
-        {% if post.author == user %}
+        {% if user.id == post.author.id %}
         <div class="post">
             <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>

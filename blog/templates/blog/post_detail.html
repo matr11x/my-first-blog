@@ -1,42 +1,41 @@
 {% extends 'blog/base.html' %}
-
 {% block title %} {{ post.title }} {% endblock %}
 
 {% block content %}
-    {% if post.author == user %}
 
-        <article class="post">
-            <aside class="actions">
-                <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
-                    Edit {% include './icons/pencil-square.svg' %}
-                </a>
-                <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">
-                    Delete {% include './icons/x-square-fill.svg' %}
-                </a>            
-        </aside>
-    {% endif %}
-
+    <h1>{{ post.title }} - <small><a href="{% url 'category' post.category %}">{{ post.category }}</a></small></h1>
 
     {% if post.published_date %}
-        <div class="date" style="margin-left: 10px;">
-            <small>By: {{ post.author }}</small><br/>
+        <small>By:
+            {{ post.author }} - 
             {{ post.published_date }}
-        </div>
     {% else %}
-        {% if post.author == user %}
-            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% if user.id == post.author.id %}
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}" >Publish
+            {% include './icons/journal-check.svg' %}
+            </a>
         {% endif %}
     {% endif %}
 
-    <h2>
-        {{ post.title }} - <small><a href="{% url 'category' post.category %}">{{ post.category }}</a></small>
-      </h2>
-        <hr>
-        <br/>
-        <br/>
-        <br/>
-        <p>{{ post.text|safe }}</p>
-    </article>
+    {% if user.id == post.author.id %}
+
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float: right;">
+            Edit {% include './icons/pencil-square.svg' %}
+        </a>
+
+        <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" style="float: right;">
+            Delete {% include './icons/x-square.svg' %}
+        </a>  
+
+    {% endif %}
+
+    </small>
+
+    <hr>
+
+    <p>{{ post.text|safe }}</p>
+
+    <br/>
 
     <a href="{% url 'post_list' %}" class = "btn btn-secondary">Back</a>
     <hr>
