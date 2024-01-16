@@ -39,20 +39,24 @@
 
             {% if user.is_authenticated %}
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Categories
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    </div>
-                </li>  
-                <li class="nav-item">
-                    <a href="{% url 'add_category' %}" class="nav-link">
-                        New Category
-                    </a>
-                </li>  
+                {% if cat_menu %}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            
+                            <a href="{% url 'add_category' %}" class="dropdown-item">New Category</a>
+                            <div class="dropdown-divider"></div>
+
+                            {% for item in cat_menu %}
+                                <a class="dropdown-item" href="{% url 'category' item|slugify %}">{{ item }}</a>
+                            {% endfor %}
+
+                        </div>
+                    </li>  
+                {% endif %}
 
                 <li class="nav-item">
                     <a href="{% url 'post_draft_list' %}" class="nav-link"><span class="glyphicon glyphicon-edit"></span> Drafts</a>
@@ -63,7 +67,6 @@
                     </a>
                 </li>
                 
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
