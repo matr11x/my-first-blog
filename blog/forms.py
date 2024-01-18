@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 
 choices = Category.objects.all().values_list('name', 'name')
@@ -66,3 +66,14 @@ class EditProfileForm(UserChangeForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
     
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('name', 'body',)
+
+        widgets = {
+            'name' : forms.TextInput(attrs={'class':'form-control'}),
+            'body' : forms.Textarea(attrs={'class':'form-control'}),
+        }
+

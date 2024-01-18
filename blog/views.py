@@ -2,10 +2,10 @@ from typing import Any
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from .models import Post, Category
+from .models import Post, Category, Comment
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm, CategoryForm
+from .forms import PostForm, CategoryForm, CommentForm
 from .forms import SignUpForm
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView
 from .forms import EditProfileForm
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
@@ -152,3 +153,14 @@ class PasswrodsChangeView(PasswordChangeView):
 
 def password_success(request):
     return render(request, 'password_success.html', {})
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'add_comment.html'
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+
+    success_url = reverse_lazy('post_list')

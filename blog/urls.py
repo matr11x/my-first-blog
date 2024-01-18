@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import UserEditView, PasswrodsChangeView
+from .views import UserEditView, PasswrodsChangeView, AddCommentView
  
 urlpatterns = [
     path('', views.post_list, name = 'post_list'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('edit_profile/', UserEditView.as_view(), name = 'edit_profile'),
     path('password/', PasswrodsChangeView.as_view(template_name='change-password.html')),
     path('password_success', views.password_success, name = 'password_success'),
+    path('post/<int:pk>/comment/', AddCommentView.as_view(), name = 'add_comment'),
 ]
